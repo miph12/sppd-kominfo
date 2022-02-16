@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e-SPPD Kominfo</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<script src="js/lumino.glyphs.js"></script>
+</head>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 5px;
+    font-size: 12px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: grey;
+    color: white;
+    text-align: center;
+}
+tr:hover {
+	background-color: #f5f5f5;
+}
+table, td, th {    
+    border: 3px solid #ddd;
+    text-align: left;
+}
+.tabel {
+	text-align: center;
+}
+.atas{
+	background-color: grey;
+    color: white;
+}
+</style>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<a class="navbar-brand" href="#"><marquee><span>e-SPPD</span>KOMINFO<span>BONDOWOSO</span></marquee></a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a> Hy, Admin </a>
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<img src="image/kominfo.jpg" width="200" height="170">
+		<ul class="nav menu">
+			<li><a href="beranda.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"/></svg> Beranda</a></li>
+			<li><a href="pegawai.php"><svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"/></svg> Data Pegawai</a></li>
+			<li><a href="pejabat.php"><svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"/></svg> Data Pejabat</a></li>
+			<li class="active"><a href="sppd.php"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> SPPD</a></li>
+			<li><a href="laporan.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg>Laporan</a></li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="index.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Log Out</a></li>
+		</ul>
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Icons</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Data SPPD</h1>
+			</div>
+		</div><!--/.row-->
+				
+		
+	<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<table >
+						
+							<thead>
+							<tbody>
+							    <div>
+									<a href="tambahsppd.php"><input type="submit" name="tambah" value="Tambah SPPD" class="btn btn-primary"></a><br>
+									<br>
+								</div>
+								    <tr>
+								        <th rowspan="2">No SPPD</th>
+								        <th rowspan="2">Tanggal</th>
+								        <th rowspan="2">Maksud</th>
+								        <th rowspan="2">Pemberi Perintah</th>
+								        <th rowspan="2">Yang di Perintah</th>
+								        <th rowspan="2">Tujuan</th>
+								        <th rowspan="2">Berangkat</th>
+								        <th rowspan="2">Kembali</th>
+								        <th colspan="3" class="tabel">Biaya</th>
+								        <th rowspan="2">Alasan</th>
+								        <th rowspan="2">Aksi</th>
+								        <th rowspan="2">Status</th>
+								    </tr>
+								    <tr>
+								    	<td class="atas">Akomodasi</td>
+								    	<td class="atas">Transport</td>
+								    	<td class="atas">Total</td>
+								    </tr>
+								    <tbody>
+								    <?php
+									include"inc/koneksi.php";
+									// $id = mysql_escape_string($_GET['id']);
+									$query = mysql_query("SELECT
+									tb_sppd.kode_sppd,
+									tb_sppd.tanggal_surat,
+									tb_sppd.maksud,
+									tb_sppd.alat_angkut,
+									tb_sppd.tempat_berangkat,
+									tb_sppd.tempat_tujuan,
+									tb_sppd.lama_perjalanan,
+									tb_sppd.tgl_berangkat,
+									tb_sppd.tgl_kembali,
+									tb_sppd.instansi,
+									tb_sppd.status,
+									tb_sppd.keterangan,
+									tb_sppd.dasar,
+									tb_sppd.biaya,
+									
+									tb_sppd.biaya_tran,
+									tb_sppd.alasan,
+									tb_pegawai.nama_pegawai,
+									tb_pegawai.nip,
+									tb_pejabat.nama_pejabat,
+									tb_pejabat.nippj,
+									tb_jabatan.jabatan,
+									tb_golongan.golongan
+									FROM
+									tb_sppd
+									Inner Join tb_pegawai ON tb_sppd.kode_pegawai = tb_pegawai.kode_pegawai
+									Inner Join tb_pejabat ON tb_pejabat.kode_pejabat = tb_sppd.kode_pejabat
+									Inner Join tb_golongan ON tb_pegawai.kode_golongan = tb_golongan.kode_golongan
+									Inner Join tb_jabatan ON tb_pegawai.kode_jabatan = tb_jabatan.kode_jabatan  ");
+
+					
+									$no=1;
+									while ($data = mysql_fetch_assoc($query)) {
+									$bia = $data['biaya'];
+									$lama = $data['lama_perjalanan'];
+									$ako = $bia*$lama;
+									$tran = $data['biaya_tran'];
+									$jumlah = $ako+$tran;
+									
+										?>
+										<tr>
+											<td class="tabel"><?php echo $no ?></td>
+											<td class="tabel"><?php echo date("d F Y", strtotime($data ['tanggal_surat'])) ;?></td>
+											<td class="tabel"><?php echo $data['maksud']?></td>
+											<td class="tabel"><?php echo $data['nama_pejabat']?></td>
+											<td class="tabel"><?php echo $data['nama_pegawai']?></td>
+											<td class="tabel"><?php echo $data['tempat_tujuan']?></td>
+											<td class="tabel"><?php echo date("d F Y", strtotime($data ['tgl_berangkat'])) ;?></td>
+											<td class="tabel"><?php echo date("d F Y", strtotime($data ['tgl_kembali'])) ;?></td>
+											<td class="tabel"><?php echo $data['biaya']?>x<?php echo $data['lama_perjalanan']?></td>
+											<td class="tabel"><?php echo $data['biaya_tran']?></td>
+											<td class="tabel"><?php echo $jumlah?></td>
+											<td class="tabel"><?php echo $data['alasan']?></td>
+										
+
+											<td class="tabel">
+												<a href="editsppd.php?kode_sppd=<?php echo $data['kode_sppd'];?>"><input type="submit" name="edit" value="Edit" class="btn-xs"></a>
+												<a href="cetak/cetak_sppd.php?kode_sppd=<?php echo $data['kode_sppd'];?>" target="_blank"><input type="submit" name="edit" value="SPPD" class="btn-xs"></a>
+												<a href="cetak/cetak_spt.php?kode_sppd=<?php echo $data['kode_sppd'];?>" target="_blank"><input type="submit" name="edit" value="SPT" class="btn-xs"></a>
+												<a href="cetak/kwitansi.php?kode_sppd=<?php echo $data['kode_sppd'];?>" target="_blank"><input type="submit" name="edit" value="Kwitansi" class="btn-xs"></a>
+											</td>
+											 <?php  
+						                          switch ($data['status']) {
+						                            case '1':
+						                              $b = "TELAH SELESAI DI PROSES";
+						                              $p = "?page=daftartdp";
+						                              break;
+						                             case '2':
+						                              $b = "DATA DI TOLAK, CEK KEMBALI";
+						                              $p = "?page=daftartdp";
+						                              break;
+						                            
+						                            default:
+						                              $a= "";
+						                              $b = "DATA BELUM DI PROSES";
+						                              $p = "#";
+						                              break;
+						                          }
+						                        ?>
+											<td>
+												<?php  echo $b?>
+											</td>
+
+												
+											</tr>
+									<?php
+										$no++; 
+									}
+									?>
+							</tbody>
+							</thead>
+						
+
+								
+						</table>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->			
+		
+						
+		
+		
+	</div><!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/chart-data.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/easypiechart-data.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+		
+</body>
+
+</html>
